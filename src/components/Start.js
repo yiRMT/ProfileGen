@@ -19,8 +19,11 @@ const Start = () => {
 
     })
     
-    async function sendData(Index, Email, newDocid) {  
-        console.log("hoge")
+    async function sendData() {  
+        console.log(content)
+        console.log(charnum)
+        console.log(question)
+        console.log(chk)
     }
     const hndlChk1 = (event) => {
     // checkBoxのバリューは event.target.checked で取得できる
