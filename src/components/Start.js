@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { Suspense } from "react";
 import { db } from "../firebase/firebase";
+import { ask } from "../chatGPT/asktest";
 import {
     collection,
     doc,
@@ -18,12 +20,14 @@ const Start = () => {
         c2:false,
 
     })
+    const [result, setResult] = useState("");
     
     async function sendData() {  
         console.log(content)
         console.log(charnum)
         console.log(question)
-        console.log(chk)
+        console.log(chk) 
+        setResult(await ask("元気？"))
     }
     const hndlChk1 = (event) => {
     // checkBoxのバリューは event.target.checked で取得できる
@@ -101,6 +105,10 @@ const Start = () => {
             {JSON.stringify(chk)}
             </Box>
             <Button variant="contained" width="full" onClick={sendData} >送信</Button>
+            <h2>結果</h2>
+            <Suspense fallback={<div>...Loading</div>}>
+                <p>{ result }</p>
+            </Suspense>
             
         </>
     );
