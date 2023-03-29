@@ -1,27 +1,20 @@
 import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
-
-import 'firebase/app-check'
 
 const firebaseConfig = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_API_AUTHDOMAIN,
-    projectId: process.env.REACT_APP_API_PROJECTOD,
-    storageBucket: process.env.REACT_APP_API_STORAGEBUCKET,
-    messagingSenderId: process.env.REACT_APP_API_MESSAGINGSENDERID,
-    appId: process.env.REACT_APP_API_APPID,
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_API_MESSAGE_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
-const reCAPTCHA_PUBLIC_KEY = process.env.REACT_APP_PUBLIC_KEY
-
-const app = initializeApp(firebaseConfig)//.firebase.appCheck().activate(reCAPTCHA_PUBLIC_KEY);
-
-export const startAppCheck = () => initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider(reCAPTCHA_PUBLIC_KEY),
-    isTokenAutoRefreshEnabled: true,
-});
-
-export const db = getFirestore(app);
-
+const app = initializeApp(firebaseConfig);
 export default app;
+
+const auth = getAuth(app);
+const db = getFirestore(app);
+export {auth, db};
