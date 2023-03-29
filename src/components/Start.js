@@ -28,7 +28,7 @@ const Start = () => {
         console.log(question)
         console.log(chk)
         if (apiKey !== '') {
-            const gpt_response = await askGPT(apiKey, "元気？")
+            const gpt_response = await askGPT(apiKey, "元気？", charnum, question, chk)
             setResult(gpt_response)
         }
     }
