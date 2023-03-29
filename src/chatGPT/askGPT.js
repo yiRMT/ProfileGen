@@ -1,6 +1,6 @@
 const { Configuration, OpenAIApi } = require("openai");
 
-export const askGPT = async (apikey, content, model = "gpt-3.5-turbo-0301") => {
+export const askGPT = async (apikey, content, model = "gpt-3.5-turbo") => {
     const configuration = new Configuration({
         apiKey: apikey,
     });
