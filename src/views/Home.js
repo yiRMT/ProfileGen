@@ -1,42 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../firebase/firebase';
 import Start from '../components/Start'
-import SignOut from '../components/SignOut';
-import '../style/login.css';
+import '../style/home.css';
 
 const Home = () => {
-    const [user, setUser] = useState('');
-
-    useEffect(() => {
-        onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
-        });
-    }, []);
-
     return (
         <>
-            {user ? (
-                <>
-                    <div>
-                        <div className='consent'>
-                            <div className='section'>
-                                <h1>誰かが代わりにES書いてくれるサイト</h1>
-                                <p>AIくんいつもありがとう！</p>
-                            </div>
-                            <div>
-                                <p>アカウントEmail: {user.email}</p>
-                                <p>アカウントUID: {user.uid}</p>
-                                <SignOut/>
-                            </div>
-                            <Start />
-                        </div>
-                    </div>
-                </>
-            ) : (
-                <Navigate to={`/signin`}/>
-            )}
+            <header>
+                <h1 className='title'>
+                    ProfileGen powered by OpenAI
+                </h1>
+            </header>
+            <div className='consent'>
+                <Start />
+            </div>
+            <footer>
+                <p>
+                    This app is powered by OpenAI's GPT-3. It is a demo app and is not intended for commercial use.
+                </p>
+            </footer>
         </>
     );
 };

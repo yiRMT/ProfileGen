@@ -9,7 +9,6 @@ import {
     getDoc,
 } from "firebase/firestore";
 import {Box,TextField, Button, FormControlLabel, FormGroup, Checkbox, FormLabel } from '@mui/material'
-import '../style/start.css';
 
 const Start = () => {
     const [apiKey, setAPIKey] = useState("");
@@ -17,19 +16,42 @@ const Start = () => {
     const [charnum, setCharnum] = useState("");
     const [question, setQuestion] = useState("");
     const [chk, setChk] = useState({
-        c1:false,
-        c2:false,
+        c1: false,
+        c2: false,
     })
-    const [result, setResult] = useState("test");
+    const [result, setResult] = useState("");
     
     async function sendData() {  
         console.log(content)
         console.log(charnum)
         console.log(question)
         console.log(chk)
-        if (apiKey !== '') {
+        if (apiKey === '') {
+            alert('OpenAI API Keyが入力されていません')
+            return
+        }
+        if (question === '') {
+            alert('質問が入力されていません')
+            return
+        }
+        if (content === '') {
+            alert('内容が入力されていません')
+            return
+        }
+        if (charnum === '') {
+            alert('文字数が入力されていません')
+            return
+        }
+        if (chk.c1 === false && chk.c2 === false) {
+            alert('チェックボックスが選択されていません')
+            return
+        }
+
+        try {
             const gpt_response = await askGPT(apiKey, "元気？")
             setResult(gpt_response)
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -81,7 +103,8 @@ const Start = () => {
                 value={apiKey}
                 onChange={(e) => {
                     setAPIKey(e.target.value)
-                }} />
+                }} 
+            />
             <p/>
             <TextField
                 id="filled-multiline-static"
@@ -92,7 +115,8 @@ const Start = () => {
                 value={question}
                 onChange={(e) => {
                     setQuestion(e.target.value)
-                }} />
+                }} 
+            />
             <p/>
             <TextField
                 id="filled-multiline-static"
@@ -103,23 +127,27 @@ const Start = () => {
                 value={content}
                 onChange={(e) => {
                     setContent(e.target.value)
-                }} />
+                }} 
+            />
             <p/>
-            <TextField id="input-with-sx" label="文字数" variant="standard" type="number"
+            <TextField 
+                id="input-with-sx" 
+                label="文字数" 
+                variant="standard" 
+                type="number"
                 onChange={(e) => {
                     setCharnum(e.target.value)
-                }} />
-            <p>{charnum}</p>
+                }} 
+            />
             <FormGroup>
                 <FormControlLabel control={<Checkbox onChange={hndlChk1}/>} label="添削" />
                 <FormControlLabel control={<Checkbox onChange={hndlChk2}/>} label="内容生成" />
             </FormGroup>
-            <Box>
-            現在のcheckBoxステートの内容 <br></br>
-            {JSON.stringify(chk)}
-            </Box>
-            <Button variant="contained" width="full" onClick={sendData} >送信</Button>
-            <h2>結果</h2>
+            <Button variant="contained" width="full" onClick={sendData} >
+                送信
+            </Button>
+            <p/>
+            <h2>回答</h2>
             <Suspense fallback={<div>...Loading</div>}>
                 <p>{ result }</p>
             </Suspense>
