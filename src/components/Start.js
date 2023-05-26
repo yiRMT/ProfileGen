@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import { Suspense } from "react";
-import { db } from "../firebase/firebase";
 import { askGPT } from "../chatGPT/askGPT";
-import {
-    collection,
-    doc,
-    updateDoc,
-    getDoc,
-} from "firebase/firestore";
-import {Box,TextField, Button, FormControlLabel, FormGroup, Checkbox, FormLabel } from '@mui/material'
+import { TextField, Button, FormControlLabel, FormGroup, Checkbox } from '@mui/material'
 
 const Start = () => {
     const [apiKey, setAPIKey] = useState("");
